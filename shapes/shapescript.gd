@@ -1,0 +1,25 @@
+tool
+extends Sprite
+
+export(String, "Circle", "Square", "Polygon") var shape
+export(int, 3, 10) var poly_count = 3
+export(Color) var color = "ffffff";
+
+const shader = preload("res://addons/shapes/Shapes.shader")
+
+func _enter_tree():
+	self.texture = preload("res://addons/shapes/base_texture.png")
+	self.material = ShaderMaterial.new()
+	self.material.set_shader(shader)
+
+func _process(delta):
+	if shape == "Circle":
+		self.material.set_shader_param("shape", 0)
+	elif shape == "Square":
+		self.material.set_shader_param("shape", 1)
+	elif shape == "Polygon":
+		self.material.set_shader_param("shape", 2)
+		self.material.set_shader_param("poly_count", poly_count)
+	
+	self.material.set_shader_param("poly_count", poly_count)
+	self.material.set_shader_param("chosen_color", color);
